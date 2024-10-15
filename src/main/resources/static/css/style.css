@@ -1,0 +1,565 @@
+/* Reset styles */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+
+.transparent {
+    background-color: rgba(255, 255, 255, 0.3); /* Transparent white background for the entire form field */
+    transition: background-color 0.3s ease;
+}
+/* Container for the blurred background image */
+.background-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Ensure it stays behind other content */
+    overflow: hidden;
+}
+
+/* Background image with blur effect */
+.background-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Cover the entire container */
+    filter: blur(8px); /* Adjust the blur level */
+    -webkit-filter: blur(8px); /* For Safari */
+}
+
+/* Content container to ensure it is above the background */
+.content-container {
+    position: relative;
+    z-index: 1; /* Ensure content stays above the background */
+}
+
+/* Add this to your form container */
+.form-container {
+    position: relative;
+    z-index: 2; /* Ensure form content stays above the background */
+    /*background: rgba(255, 255, 255, 0.3); !* Semi-transparent background *!*/
+    padding: 20px;
+    border-radius: 10px; /* Optional: Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Shadow effect */
+}
+
+/* Global typography */
+body {
+    /*!* Background Image *!*/
+    /*background-image: url('/static/images/img6.jpg'); !* Replace with your image path *!*/
+    /*background-size: cover; !* Ensure the background covers the entire viewport *!*/
+    /*background-position: center; !* Center the background image *!*/
+    /*background-repeat: no-repeat;*/
+
+    /*height: 100vh; !* Sets the height to 100% of the viewport height *!*/
+
+    background: linear-gradient(135deg, rgba(123, 163, 188, 0.7),rgba(255, 190, 67, 0.7)); /* Gradient from top left to bottom right */
+    height: 100vh; /* Sets the height to 100% of the viewport height */
+    background-size: cover; /* Ensure the background covers the entire viewport */
+    background-position: center; /* Center the background */
+    background-repeat: no-repeat;
+    /*display: flex; !* Flex container to stretch height *!*/
+    /*flex-direction: column;*/
+
+    font-family: 'Roboto', sans-serif; /* Changed to Roboto */
+    font-size: 15px; /* Changed to 15px */
+    line-height: 21px; /* Changed to 21px */
+    color: #222; /* Changed to a darker shade of grey */
+}
+
+
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+p {
+    margin-bottom: 15px;
+}
+
+/* Global layout */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Global links */
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive design */
+@media screen and (max-width: 768px) {
+    .container {
+        padding: 0 10px;
+    }
+}
+
+/* Body styles */
+body {
+    /*background-color: #f8f9fa; !* Light grey *!*/
+}
+
+/* Navbar styles */
+.navbar {
+    background-color: #ffffff; /* White */
+}
+
+.navbar-nav .nav-link {
+    color: #6c757d; /* Dark grey */
+}
+
+.navbar-nav .nav-link:hover {
+    color: #ff7f50; /* Orange */
+}
+
+:root {
+    --orange: #EF7E3B; /* Default orange color */
+    --dark-grey: #575656; /* Default dark gray color */
+    --light-gray: #A4A4A4; /* Default light gray color */
+    --white: #ffffff;
+    --teal:#12ABE0;
+    --blue: #1455A6;
+    --blueBtbOnline:#074D80;
+    --headerText:#1B222D;
+    --commonText:#222222;
+    --red:red/* Default white color */
+}
+/* Button styles */
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+.nav-link.btn-teal {
+    color: var(--white); /* White text */
+    background-color: var(--orange); /* Orange background */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition for color change */
+    text-decoration: none;
+    border-radius: 8px; /* Adjust the border radius as needed */
+
+}
+
+.nav-link.btn-teal:hover {
+    color: var(--white); /* Orange text on hover */
+    background-color: var(--teal); /* Orange background */
+    text-decoration: none;
+    border-radius: 8px; /* Adjust the border radius as needed */
+    opacity: 1;
+}
+.btn-primary {
+    color: var(--white); /* White text */
+    background-color: var(--orange); /* Orange background */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition for color change */
+    text-decoration: none;
+    border-radius: 5px;
+    padding: 8px 18px; /* Increase padding to create more space */
+    outline: none;
+}
+
+.btn-primary:hover {
+    color: var(--white); /* Orange text on hover */
+    background-color: var(--teal); /* Orange background */
+    text-decoration: none;
+    border-radius: 5px;
+    opacity: 1;
+}
+
+.btn-secondary {
+    color: var(--white); /* White text */
+    background-color: var(--dark-grey); /* Teal background */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition for color change */
+    text-decoration: none;
+    border-radius: 5px;
+    padding: 8px 18px; /* Increase padding to create more space */
+    outline: none;
+    border: none;/* Set border color to match button color */
+}
+
+.btn-secondary:hover {
+    color: var(--white); /* Orange text on hover */
+    background-color: var(--teal); /* Orange background */
+    text-decoration: none;
+    border-radius: 5px;
+    opacity: 1;
+    border: none;
+}
+
+.btn-add {
+    color: var(--white); /* White text */
+    background-color: var(--dark-grey); /* Teal background */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition for color change */
+    text-decoration: none;
+    border-radius: 5px;
+    padding: 8px 18px; /* Increase padding to create more space */
+    outline: none;
+    border: none;/* Set border color to match button color */
+}
+
+.btn-add:hover {
+    color: var(--white); /* Orange text on hover */
+    background-color: var(--blue); /* Orange background */
+    text-decoration: none;
+    border-radius: 5px;
+    opacity: 1;
+    border: none;
+}
+.btn-cancel {
+    color: var(--white); /* White text */
+    background-color: var(--dark-grey); /* Teal background */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition for color change */
+    text-decoration: none;
+    border-radius: 5px;
+    padding: 8px 18px; /* Increase padding to create more space */
+    outline: none;
+    border: none;/* Set border color to match button color */
+}
+
+.btn-cancel:hover {
+    color: var(--white); /* Orange text on hover */
+    background-color: black; /* Orange background */
+    text-decoration: none;
+    border-radius: 5px;
+    opacity: 1;
+    border: none;
+}
+
+.btn-update {
+    color: var(--white); /* White text */
+    background-color: var(--dark-grey); /* Teal background */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition for color change */
+    text-decoration: none;
+    border-radius: 5px;
+    padding: 8px 18px; /* Increase padding to create more space */
+    outline: none;
+    border: none;/* Set border color to match button color */
+}
+
+.btn-update:hover {
+    color: var(--white); /* Orange text on hover */
+    background-color: green; /* Orange background */
+    text-decoration: none;
+    border-radius: 5px;
+    opacity: 1;
+    border: none;
+}
+
+.btn-delete {
+    color: var(--white); /* White text */
+    background-color: var(--dark-grey); /* Teal background */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition for color change */
+    text-decoration: none;
+    border-radius: 5px;
+    padding: 8px 18px; /* Increase padding to create more space */
+    outline: none;
+    border: none;/* Set border color to match button color */
+}
+
+.btn-delete:hover {
+    color: var(--white); /* Orange text on hover */
+    background-color: red; /* Orange background */
+    text-decoration: none;
+    border-radius: 5px;
+    opacity: 1;
+    border: none;
+}
+
+/* Form styles */
+.form-control {
+    background-color: transparent;
+    border-color: var(--dark-grey); /* Grey */
+    transition: background-color 0.3s ease;
+}
+
+.transparent .form-control:focus {
+    background-color: transparent; /* Maintain transparency when input is focused */
+    /* Optional: Adjust border color or shadow when focused */
+}
+
+.invalid-feedback {
+    color: var(--red); /* Red */
+}
+
+/* Additional fonts */
+/* Body font */
+body {
+    font-family: 'Roboto', sans-serif; /* Roboto font */
+    font-size: 15px; /* Font size 15px */
+    line-height: 21px; /* Line height 21px */
+    color: var(--commonText); /* Dark grey color */
+}
+
+/* Header font */
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 600; /* Font weight 600 */
+    color: var(--headerText); /* Dark blue color */
+    font-size: 20px; /* Font size 20px */
+    line-height: 24px; /* Line height 24px */
+}
+.nav-wrapper__item {
+    margin: 5px 5px 5px 5px;
+}
+
+.nav-wrapper__item-link {
+    color: var(--white); /* White */
+    text-decoration: none;
+    transition: color 0.3s ease; /* Smooth transition for color change */
+}
+
+.nav-wrapper__item-link:hover {
+    color: var(--orange); /* Orange */
+    text-decoration: none;
+}
+
+
+
+
+
+/*.nav-wrapper__item-link i {*/
+/*    color: var(--orange);*/
+/*    !*margin-right: 1px; !* Add some space between the icon and the text *!*!*/
+/*}*/
+
+/*.nav-wrapper__item-link:hover i {*/
+/*    color: var(--white); !* Ensure the icon color changes on hover *!*/
+/*}*/
+/*.nav-wrapper__item-link .bi-bell {*/
+/*    color: var(--blue); !* Use the blue color defined in your CSS variables *!*/
+/*}*/
+/*.blue-icon {*/
+/*    color: var(--blue); !* Blue color for the second bell icon *!*/
+/*}*/
+
+
+
+
+
+.nav-wrapper__item-link:hover i {
+    color: var(--white); /* Ensure the icon color changes on hover */
+}
+
+
+.blue-icon {
+    color: var(--blue); /* Blue color for the second bell icon */
+}
+.orange-icon {
+    color: var(--orange); /* Blue color for the second bell icon */
+}
+
+.nav-wrapper__item-link .glow-orange {
+    text-shadow: 0 0 10px rgba(239, 126, 59, 0.8); /* Orange glow effect */
+}
+
+.nav-wrapper__item-link .glow-blue {
+    text-shadow: 0 0 10px rgba(20, 85, 166, 0.8); /* Blue glow effect */
+}
+
+/* Increase intensity of glow on hover */
+.nav-wrapper__item-link:hover .glow-orange {
+    text-shadow: 0 0 20px rgba(239, 126, 59, 1); /* Increase intensity of orange glow */
+}
+
+.nav-wrapper__item-link:hover .glow-blue {
+    text-shadow: 0 0 20px rgba(20, 85, 166, 1); /* Increase intensity of blue glow */
+}
+
+
+
+
+
+.custom-table {
+    border-radius: 8px; /* Add rounded corners to the table */
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow */
+    overflow: hidden; /* Ensure rounded corners are applied properly */
+    background-color: rgba(255, 255, 255, 0); /* Transparent background for the table */
+}
+.custom-table thead th {
+    background-color: rgba(239, 126, 59, 1); /* Highlight color for column headers */
+    color: var(--white); /* Text color for column headers */
+}
+
+.custom-table tbody tr {
+    background-color: rgba(255, 255, 255, 0.1); /* Row color (transparent white) */
+}
+
+.custom-table tbody tr:nth-child(even) {
+    background-color: rgba(255, 255, 255, 0.2); /* Alternate row color (slightly less transparent white) */
+}
+
+.custom-table tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.3); /* Hover effect for rows (almost opaque white) */
+}
+
+/* Rounded corners for the first and last table rows */
+.custom-table thead th:first-child {
+    border-top-left-radius: 8px;
+}
+
+.custom-table thead th:last-child {
+    border-top-right-radius: 8px;
+}
+
+.custom-table tbody tr:last-child td:first-child {
+    border-bottom-left-radius: 8px;
+}
+
+.custom-table tbody tr:last-child td:last-child {
+    border-bottom-right-radius: 8px;
+}
+
+/*.transparent {*/
+/*    background-color: rgba(255, 255, 255, 0.3); !* Transparent white background *!*/
+/*}*/
+
+.transparent input.form-control {
+    background-color: transparent; /* Ensure input field background remains transparent */
+    /*border: none; !* Optional: Remove border for a cleaner look *!*/
+    /*color: rgba(0, 0, 0, 0.5); !* Text color *!*/
+    transition: background-color 0.3s ease; /* Smooth transition for background color change */
+}
+
+.transparent input.form-control:focus {
+    background-color: transparent; /* Maintain transparency when input is focused */
+    /*border-color: rgba(0, 0, 0, 0.5); !* Optional: Adjust border color when focused *!*/
+}
+.transparent.shadow-lg {
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2), 0 8px 8px rgba(0, 0, 0, 0.1); /* Longer shadow with two layers */
+}
+
+.transparent .alert {
+    background-color: rgba(255, 0, 0, 0.5); /* Transparent red background for the alert */
+    color: rgba(255, 255, 255, 0.8); /* White text color for the alert */
+    border-color: rgba(255, 0, 0, 0.8); /* Optional: Adjust border color for the alert */
+}
+
+.transparent .alert.transparent {
+    background-color: rgba(255, 0, 0, 0.5); /* Ensure alert background remains transparent */
+    color: rgba(255, 255, 255, 0.8); /* Text color for the alert */
+    border-color: rgba(255, 0, 0, 0.8); /* Optional: Adjust border color for the alert */
+}
+
+.transparent .alert-success.transparent {
+    background-color: rgba(0, 128, 0, 0.5); /* Transparent green background for the success alert */
+    color: rgba(255, 255, 255, 0.8); /* White text color for the success alert */
+    border-color: rgba(0, 128, 0, 0.8); /* Optional: Adjust border color for the success alert */
+}
+
+.transparent .form-check-input {
+    background-color: transparent; /* Ensure checkbox background remains transparent */
+    margin-right: 8px; /* Optional: Adjust margin for spacing between checkbox and label */
+}
+
+.transparent .form-check-input:checked {
+    border-color: var(--dark-grey);
+    background-color: var(--dark-grey); /* Maintain transparency when checkbox is checked */
+}
+
+.transparent .form-check-label {
+    color: var(--dark-grey); /* Text color for the checkbox label */
+    transition: color 0.3s ease; /* Smooth transition for text color change */
+}
+
+.transparent-textarea {
+    background-color: transparent; /* Transparent white background */
+    transition: background-color 0.3s ease, border-color 0.3s ease; /* Smooth transition for background and border color change */
+
+    resize: none; /* Prevent resizing */
+    overflow: auto; /* Enable scroll */
+}
+
+.transparent-textarea:focus {
+    background-color: transparent; /* Maintain transparency when focused */
+    box-shadow: none; /* Remove default focus shadow */
+    outline: none; /* Remove default outline */
+}
+
+/* Transparent scrollbar styling */
+.transparent-textarea::-webkit-scrollbar {
+    width: 8px; /* Width of the scrollbar */
+}
+
+.transparent-textarea::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2); /* Color of the thumb (scroll handle) */
+    border-radius: 4px; /* Rounded corners */
+}
+
+.transparent-textarea::-webkit-scrollbar-track {
+    background-color: transparent; /* Transparent track */
+}
+
+.transparent-textarea::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0, 0, 0, 0.4); /* Darker thumb on hover */
+}
+
+.transparent-textarea::-webkit-scrollbar-thumb:active {
+    background-color: rgba(0, 0, 0, 0.6); /* Even darker thumb when active */
+}
+
+.transparent-select {
+    background-color: transparent; /* Transparent white background */
+    transition: background-color 0.3s ease, border-color 0.3s ease; /* Smooth transition for background and border color change */
+}
+
+.transparent-select:focus {
+    background-color: transparent; /* Maintain transparency when focused */
+    /*border-color: var(--dark-grey); !* Border color on focus *!*/
+    box-shadow: none; /* Remove default focus shadow */
+    outline: none; /* Remove default outline */
+}
+.transparent-select option {
+    background-color: transparent; /* Transparent background for options */
+    color: var(--dark-grey); /* Text color for options */
+}
+
+
+
+
+/*.gradient-text {*/
+/*    background: linear-gradient(135deg, var(--orange), var(--blue));*/
+/*    -webkit-background-clip: text;*/
+/*    background-clip: text;*/
+/*    -webkit-text-fill-color: transparent;*/
+/*    display: inline-block; !* Ensures the gradient applies correctly *!*/
+/*}*/
+
+
+/*.glow-text {*/
+/*    position: relative;*/
+/*    display: inline-block;*/
+/*    color: #ffffff; !* Text color *!*/
+/*    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8); !* Initial glow effect *!*/
+/*    transition: text-shadow 0.3s ease-in-out; !* Smooth transition for the glow effect *!*/
+/*}*/
+
+/*.glow-text:hover {*/
+/*    text-shadow: 0 0 20px rgba(255, 255, 255, 1); !* Increased glow effect on hover *!*/
+/*}*/
