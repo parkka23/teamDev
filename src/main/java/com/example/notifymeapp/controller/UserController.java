@@ -42,6 +42,69 @@ public class UserController {
     private final UserDetailsServiceImpl userDetailsService;
     private final PasswordEncoder passwordEncoder;
 
+    @GetMapping("/login")
+    public String login(Model model, @RequestParam(name = "error", required = false) String error, Authentication authentication) {
+        if (error != null) {
+            model.addAttribute("loginError", "Invalid email address or password.");
+            return "user/login";
+        }
+
+        // Check if the user is authenticated
+        boolean isLoggedIn = authentication != null && authentication.isAuthenticated()
+                && !"anonymousUser".equals(authentication.getPrincipal());
+
+        System.out.println(isLoggedIn);
+        return "user/login";
+
+    }
+
+
+    @GetMapping("/list")
+    public String viewUsers(@RequestParam(required = false) String sortField,
+                            @RequestParam(required = false) String sortDir,
+                            @RequestParam(required = false) String query,
+                            @RequestParam(required = false) String clear,
+                            Model model,
+                            Authentication authentication,
+                            HttpServletRequest request) {
+
+        HttpSession session = request.getSession();
+        if (!"/user/list".equals(request.getHeader("Referer"))) {
+            session.removeAttribute("previousQuery");
+        }
+        if ("true".equals(clear)) {
+            session.removeAttribute("previousQuery");
+        }
+        String previousQuery = (String) session.getAttribute("previousQuery");
+
+        List<User> users;
+
+        if (query != null && !query.isEmpty()) {
+            users = userRepository.findByFullNameContainingIgnoreCase(query);
+            // Update the session with the current query
+            session.setAttribute("previousQuery", query);
+        } else if (previousQuery != null && !previousQuery.isEmpty()) {
+            // Use the previous query if the current one is not specified
+            users = userRepository.findByFullNameContainingIgnoreCase(previousQuery);
+        } else {
+            users = userService.getUsers(); // Fetch all services if no query
+        }
+
+        users = userService.getUsers(users, sortField, sortDir); // Apply sorting and filtering
+
+        model.addAttribute("users", users);
+
+        List<String> userRoles = authentication.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.toList());
+        model.addAttribute("userRoles", userRoles);
+
+        model.addAttribute("sortField", sortField != null ? sortField : "");
+        model.addAttribute("sortDir", sortDir != null ? sortDir : "asc");
+        model.addAttribute("query", query != null ? query : ""); // Pass the query back to the view
+
+        return "user/allUsers";
+    }
 
     @GetMapping("/{id}/delete")
     public String deleteUser(@PathVariable Long id) {
@@ -111,7 +174,6 @@ public class UserController {
             return "redirect:/user/login";
         }
     }
-
     @GetMapping("/update/roles/{id}")
     public String updateRolesForm2(@PathVariable Long id, Model model, Authentication authentication) {
         if (authentication != null && authentication.isAuthenticated() && authentication.getPrincipal() instanceof UserDetails) {
@@ -134,6 +196,7 @@ public class UserController {
         }
 
     }
+
 
 
     @PostMapping("/update/roles/{id}")

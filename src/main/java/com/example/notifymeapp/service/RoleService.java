@@ -25,16 +25,6 @@ public class RoleService {
         }
     }
 
-
-//    public Role updateEmail(Email email) {
-//        boolean existing = emailRepository.existsById(email.getEmail());
-//        if(existing){
-//            throw new NoSuchElementException("Email " + email.getEmail() + " already exists.");
-//        }
-//
-//        return emailRepository.save(email);
-//    }
-
     public Role getRoleById(String id) {
         return roleRepository.findById(id).get();
     }
@@ -43,23 +33,6 @@ public class RoleService {
         return roleRepository.existsById(name);
     }
 
-//    public void saveEmail(Email email) {
-//        if (email != null && email.getEmail() != null) {
-//            if (emailRepository.existsById(email.getEmail())) {
-//                // If the email with the same ID exists, update it
-//                Email existingEmail = emailRepository.getById(email.getEmail());
-//                existingEmail.setEmail(email.getEmail()); // Update the email address
-//                // You may update other fields here if needed
-//                emailRepository.save(existingEmail);
-//            } else {
-//                // Save the email if it doesn't exist
-//                emailRepository.save(email);
-//            }
-//        } else {
-//            // Handle the case where email or its ID is null
-//            throw new IllegalArgumentException("Email or its ID cannot be null");
-//        }
-//    }
 
     public List<Role> getAllRoles() {
         return roleRepository.findAll();
