@@ -16,7 +16,7 @@ import javax.script.ScriptException;
 public class NotifyMeAppApplication {
 //	@Autowired
 //	private JavaMailSender mailSender;
-//
+
 	public static void main(String[] args) {
 		SpringApplication.run(NotifyMeAppApplication.class, args);
 	}

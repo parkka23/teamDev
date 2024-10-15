@@ -113,11 +113,6 @@ public class UserController {
     }
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {
-//        if (SecurityContextHolder.getContext().getAuthentication() == null ||
-//                SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof String) {
-//            return "redirect:/home";
-//
-//        }
         model.addAttribute("roles", roleService.getAllRoles());
         return "user/register";
 
@@ -222,16 +217,6 @@ public class UserController {
 
         user.setRoles(updatedRoles);
         userRepository.save(user);
-
-//        // Re-authenticate with the updated roles
-//        UserDetails updatedUserDetails = userDetailsService.loadUserByUsername(user.getEmail());
-//        Authentication newAuthentication = new UsernamePasswordAuthenticationToken(
-//                updatedUserDetails,
-//                authentication.getCredentials(),
-//                updatedUserDetails.getAuthorities()
-//        );
-//        SecurityContextHolder.getContext().setAuthentication(newAuthentication);
-
         return "redirect:/user/"+id;
     }
 
