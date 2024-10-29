@@ -27,7 +27,6 @@ public class UserService {
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
-
     public List<User> getUsers() {
         return userRepository.findAll();
 
@@ -53,13 +52,11 @@ public void saveUser(UserDto userDto) {
     if (userRepository.getUserByUsername(userDto.getEmail()) != null) {
         throw new RuntimeException("Email already exists.");
     }
-
     User user = new User();
     user.setFullName(userDto.getFullName().trim());
     user.setEmail(userDto.getEmail().trim());
     user.setPassword(passwordEncoder.encode(userDto.getPassword()));
     user.setEnabled(true);
-
     // Fetch roles from the database
     Set<Role> roles = new HashSet<>();
     for (String roleName : userDto.getRoleIds()) {
@@ -76,7 +73,6 @@ public void saveUser(UserDto userDto) {
         if (sortField == null || sortField.isEmpty() || users.isEmpty()) {
             return users; // Return unsorted list if sortField is empty or services list is empty
         }
-
         // Determine sorting direction
         Comparator<User> comparator = null;
         if ("fullName".equalsIgnoreCase(sortField)) {
@@ -84,7 +80,6 @@ public void saveUser(UserDto userDto) {
         } else if ("email".equalsIgnoreCase(sortField)) {
             comparator = Comparator.comparing(User::getEmail);
         }
-
         if (comparator != null) {
             // Apply sorting direction
             if ("desc".equalsIgnoreCase(sortDir)) {
@@ -102,8 +97,6 @@ public void saveUser(UserDto userDto) {
         // Fetch the existing user by ID to ensure they exist
         User existingUser = userRepository.findById(userDto.getId())
                 .orElseThrow(() -> new NoSuchElementException("User with ID " + userDto.getId() + " not found."));
-
-
         if (userDto.getFullName() != null && !userDto.getFullName().isEmpty()) {
             existingUser.setFullName(userDto.getFullName().trim());
         }
@@ -121,7 +114,6 @@ public void saveUser(UserDto userDto) {
                     .orElseThrow(() -> new RuntimeException("Role not found: " + roleName));
             roles.add(role);
         }
-
         // Save the updated user
         userRepository.save(existingUser);
 
@@ -130,11 +122,9 @@ public void saveUser(UserDto userDto) {
     }
     public void deleteUser(Long id) {
         User user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("User not found"));
-
         // Clear associations
         user.getRoles().clear();
         userRepository.save(user);
-
         // Now delete the user
         userRepository.delete(user);
     }
@@ -165,9 +155,7 @@ public void saveUser(UserDto userDto) {
                     .collect(Collectors.toSet());
             user.setRoles(roles);
         }
-
         return user;
     }
-
 
 }

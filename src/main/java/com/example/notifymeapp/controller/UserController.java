@@ -206,7 +206,6 @@ public class UserController {
         }
         Optional<User> optionalUser = userService.getUserById2(id);
         User user = optionalUser.get();
-
         Set<Role> updatedRoles = userDto.getRoleIds().stream()
                 .map(roleService::getRoleById)
                 .collect(Collectors.toSet());
@@ -214,7 +213,6 @@ public class UserController {
         if (updatedRoles.equals(user.getRoles())) {
             return "redirect:/user/"+id;
         }
-
         user.setRoles(updatedRoles);
         userRepository.save(user);
         return "redirect:/user/"+id;
@@ -245,7 +243,6 @@ public class UserController {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
             User user = userRepository.getUserByUsername(userDetails.getUsername());
             model.addAttribute("user", user);
-
         } else {
             return "redirect:/user/details";
         }
@@ -257,13 +254,10 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             return "user/updateFullName";
         }
-
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         User user = userRepository.getUserByUsername(userDetails.getUsername());
-
         user.setFullName(userDto.getFullName());
         userRepository.save(user);
-
         return "redirect:/user/details";
     }
 
@@ -284,10 +278,8 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             return "user/updateEmail";
         }
-
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         User user = userRepository.getUserByUsername(userDetails.getUsername());
-
         if (userDto.getEmail().equals(user.getEmail())) {
             return "redirect:/user/details";
         }
@@ -296,10 +288,8 @@ public class UserController {
             model.addAttribute("user", user); // Add the user object to the model in case of error
             return "user/updateEmail";
         }
-
         user.setEmail(userDto.getEmail());
         userRepository.save(user);
-
         // Re-authenticate with the updated roles
         UserDetails updatedUserDetails = userDetailsService.loadUserByUsername(user.getEmail());
         Authentication newAuthentication = new UsernamePasswordAuthenticationToken(
@@ -308,7 +298,6 @@ public class UserController {
                 updatedUserDetails.getAuthorities()
         );
         SecurityContextHolder.getContext().setAuthentication(newAuthentication);
-
         return "redirect:/user/details";
     }
 
@@ -326,7 +315,6 @@ public class UserController {
         } else {
             return "redirect:/user/details";
         }
-
     }
 
     @PostMapping("/update/roles")
@@ -334,21 +322,16 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             return "user/updateRoles";
         }
-
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         User user = userRepository.getUserByUsername(userDetails.getUsername());
-
         Set<Role> updatedRoles = userDto.getRoleIds().stream()
                 .map(roleService::getRoleById)
                 .collect(Collectors.toSet());
-
         if (updatedRoles.equals(user.getRoles())) {
             return "redirect:/user/details";
         }
-
         user.setRoles(updatedRoles);
         userRepository.save(user);
-
         // Re-authenticate with the updated roles
         UserDetails updatedUserDetails = userDetailsService.loadUserByUsername(user.getEmail());
         Authentication newAuthentication = new UsernamePasswordAuthenticationToken(
@@ -357,14 +340,12 @@ public class UserController {
                 updatedUserDetails.getAuthorities()
         );
         SecurityContextHolder.getContext().setAuthentication(newAuthentication);
-
         return "redirect:/user/details";
     }
 
     @GetMapping("/update/password")
     public String updatePasswordForm(Model model, Authentication authentication) {
         if (authentication != null && authentication.isAuthenticated() && authentication.getPrincipal() instanceof UserDetails) {
-
 //            model.addAttribute("user", new UserDto());
             return "user/updatePassword";
         }
@@ -378,10 +359,8 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             return "user/updatePassword";
         }
-
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         User user = userRepository.getUserByUsername(userDetails.getUsername());
-
         if (!passwordEncoder.matches(request.getOldPassword(), user.getPassword())) {
             model.addAttribute("updateError", "Wrong old password.");
             return "user/updatePassword";
