@@ -23,9 +23,9 @@
                                         <a class="btn btn-primary m-2" href="/user/login">Login</a>
                                 </li>
 
-                                <li style="margin-bottom: 10px;">
-                                        <a class="btn btn-primary m-2" href="/user/register">Register</a>
-                                </li>
+<#--                                <li style="margin-bottom: 10px;">-->
+<#--                                        <a class="btn btn-primary m-2" href="/user/register">Register</a>-->
+<#--                                </li>-->
                         </ul>
                 </#if>
         </div>
