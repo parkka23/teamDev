@@ -20,7 +20,7 @@ public class ServiceService {
     private final ServiceRepository serviceRepository;
     private final ChatService chatService;
     private final EmailService emailService;
-    private final EmailSenderService emailSenderService;
+//    private final EmailSenderService emailSenderService;
 
 
     public List<ServiceEntity> getServices() {
@@ -215,40 +215,40 @@ public ServiceEntity saveService(ServiceDto serviceDto) {
         serviceRepository.save(service);
     }
 
-    public void sendMessageToServiceChats(Long serviceId, String message, TelegramBot telegramBot) {
-        ServiceEntity serviceEntity = getServiceById(serviceId);
-        message=EmojiParser.parseToUnicode(":bell: Notification regarding "+serviceEntity.getName() +" service :bell:"+'\n'+message);
-        if (serviceEntity != null) {
-            Set<Chat> chats = serviceEntity.getChats();
-            List<Long> chatIds = chats.stream().map(Chat::getChatId).collect(Collectors.toList());
-            telegramBot.sendMessageToChats(message, chatIds);
-        } else {
-            throw new NoSuchElementException("Service with ID " + serviceId + " not found.");
-        }
-    }
-    public void sendMessageToServiceChats(Long serviceId, String header, String message, TelegramBot telegramBot) {
-        ServiceEntity serviceEntity = getServiceById(serviceId);
-        message=EmojiParser.parseToUnicode(":rotating_light: "+header +" :rotating_light:"+'\n'+message);
-        if (serviceEntity != null) {
-            Set<Chat> chats = serviceEntity.getChats();
-            List<Long> chatIds = chats.stream().map(Chat::getChatId).collect(Collectors.toList());
-            telegramBot.sendMessageToChats(message, chatIds);
-        } else {
-            throw new NoSuchElementException("Service with ID " + serviceId + " not found.");
-        }
-    }
+//    public void sendMessageToServiceChats(Long serviceId, String message, TelegramBot telegramBot) {
+//        ServiceEntity serviceEntity = getServiceById(serviceId);
+//        message=EmojiParser.parseToUnicode(":bell: Notification regarding "+serviceEntity.getName() +" service :bell:"+'\n'+message);
+//        if (serviceEntity != null) {
+//            Set<Chat> chats = serviceEntity.getChats();
+//            List<Long> chatIds = chats.stream().map(Chat::getChatId).collect(Collectors.toList());
+//            telegramBot.sendMessageToChats(message, chatIds);
+//        } else {
+//            throw new NoSuchElementException("Service with ID " + serviceId + " not found.");
+//        }
+//    }
+//    public void sendMessageToServiceChats(Long serviceId, String header, String message, TelegramBot telegramBot) {
+//        ServiceEntity serviceEntity = getServiceById(serviceId);
+//        message=EmojiParser.parseToUnicode(":rotating_light: "+header +" :rotating_light:"+'\n'+message);
+//        if (serviceEntity != null) {
+//            Set<Chat> chats = serviceEntity.getChats();
+//            List<Long> chatIds = chats.stream().map(Chat::getChatId).collect(Collectors.toList());
+//            telegramBot.sendMessageToChats(message, chatIds);
+//        } else {
+//            throw new NoSuchElementException("Service with ID " + serviceId + " not found.");
+//        }
+//    }
 
-    public void sendMessageToServiceEmails(Long serviceId, String message) throws IOException {
-        ServiceEntity serviceEntity = getServiceById(serviceId);
-        String subject=EmojiParser.parseToUnicode(":bell: Notification regarding "+serviceEntity.getName()+" service :bell:");
-        if (serviceEntity != null) {
-            Set<Email> emails = serviceEntity.getEmails();
-            List<String> emailAddresses = emails.stream().map(Email::getEmail).collect(Collectors.toList());
-            emailSenderService.sendEmailToMultipleRecipients(emailAddresses, subject, message);
-        } else {
-            throw new NoSuchElementException("Service with ID " + serviceId + " not found.");
-        }
-    }
+//    public void sendMessageToServiceEmails(Long serviceId, String message) throws IOException {
+//        ServiceEntity serviceEntity = getServiceById(serviceId);
+//        String subject=EmojiParser.parseToUnicode(":bell: Notification regarding "+serviceEntity.getName()+" service :bell:");
+//        if (serviceEntity != null) {
+//            Set<Email> emails = serviceEntity.getEmails();
+//            List<String> emailAddresses = emails.stream().map(Email::getEmail).collect(Collectors.toList());
+//            emailSenderService.sendEmailToMultipleRecipients(emailAddresses, subject, message);
+//        } else {
+//            throw new NoSuchElementException("Service with ID " + serviceId + " not found.");
+//        }
+//    }
 
     public List<ServiceEntity> findServicesByChatId(Long chatId) {
         // Retrieve all services

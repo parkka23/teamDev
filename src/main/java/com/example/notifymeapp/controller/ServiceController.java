@@ -5,6 +5,7 @@ import com.example.notifymeapp.entity.Chat;
 import com.example.notifymeapp.entity.Email;
 import com.example.notifymeapp.entity.ServiceEntity;
 import com.example.notifymeapp.repository.ServiceRepository;
+import com.example.notifymeapp.service.ChatService;
 import com.example.notifymeapp.service.EmailService;
 import com.example.notifymeapp.service.ServiceService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -36,7 +37,7 @@ public class ServiceController {
     private final ServiceService serviceService;
     private final ChatService chatService;
     private final EmailService emailService;
-    private final TelegramBot telegramBot;
+//    private final TelegramBot telegramBot;
     private final ServiceRepository serviceRepository;
 
     @GetMapping("/create")
@@ -273,140 +274,110 @@ public String addChatsToService(@PathVariable Long id, @RequestParam(value = "se
 
     @PostMapping("/{id}/delete-email")
     public String deleteEmailFromService(@PathVariable Long id, @RequestParam("email") String email) {
-//        try {
-//            Long chatId = Long.parseLong(chatIdStr.trim().replaceAll("[^\\d-]", ""));
-//            serviceService.deleteChatFromService(id, chatId);
-//        } catch (NumberFormatException e) {
-//            // Handle the error gracefully, maybe log it or inform the user
-//            System.err.println("Invalid chat ID format: " + chatIdStr);
-//        }
         serviceService.deleteEmailFromService(id, email);
         return "redirect:/services/{id}";
     }
 
-//@PostMapping("/{id}/add-chat")
-//public String addChatsToService(@PathVariable Long id, @RequestParam(value = "selectedChats", required = false) List<Long> selectedChats) {
-//    if (selectedChats != null && !selectedChats.isEmpty()) {
-//        serviceService.addChatsToService(id, selectedChats); // Pass the selectedChats directly
-//    }
-//    return "redirect:/services/{id}";
-//}
 
 
-    @PostMapping("/{serviceId}/message-success")
-    public String sendMessageSuccess(@RequestParam("serviceId") Long serviceId) throws IOException {
-        ServiceEntity service = serviceService.getServiceById(serviceId);
-        String message = EmojiParser.parseToUnicode(":white_check_mark: "+service.getName()+" service has successfully completed the task :white_check_mark: ");
-//        emailSenderService.sendEmail("park.ksenia23@gmail.com","hello","hello");
-
-        if (service != null) {
-            String sendTo = service.getSendTo();
-            if (sendTo != null) {
-                switch (sendTo) {
-                    case "Telegram":
-                        // Call method to send message to chats
-                        serviceService.sendMessageToServiceChats(serviceId, message,telegramBot);
-                        break;
-                    case "Email":
-                        // Call method to send message to emails
-                        serviceService.sendMessageToServiceEmails(serviceId, message);
-                        break;
-                    case "All":
-                        // Call method to send message to both chats and emails
-                        serviceService.sendMessageToServiceChats(serviceId, message,telegramBot);
-                        serviceService.sendMessageToServiceEmails(serviceId, message);
-                        break;
-                    default:
-                        // Handle if sendTo is neither Telegram nor Email nor All
-                        break;
-                }
-            }
-        }
-
-        // Redirect back to service details page
-        return "redirect:/services/" + serviceId;
-    }
-    @PostMapping("/{serviceId}/message-error")
-    public String sendMessageError(@RequestParam("serviceId") Long serviceId) throws IOException {
-        ServiceEntity service = serviceService.getServiceById(serviceId);
-        String message = EmojiParser.parseToUnicode(":warning: ERROR occurred in "+ service.getName()+" service :warning:");
-        if (service != null) {
-            String sendTo = service.getSendTo();
-            if (sendTo != null) {
-                switch (sendTo) {
-                    case "Telegram":
-                        // Call method to send message to chats
-                        serviceService.sendMessageToServiceChats(serviceId, message,telegramBot);
-                        break;
-                    case "Email":
-                        // Call method to send message to emails
-                        serviceService.sendMessageToServiceEmails(serviceId, message);
-                        break;
-                    case "All":
-                        // Call method to send message to both chats and emails
-                        serviceService.sendMessageToServiceChats(serviceId, message,telegramBot);
-                        serviceService.sendMessageToServiceEmails(serviceId, message);
-                        break;
-                    default:
-                        // Handle if sendTo is neither Telegram nor Email nor All
-                        break;
-                }
-            }
-        }
-
-        // Redirect back to service details page
-        return "redirect:/services/" + serviceId;
-    }
-
-//    @PostMapping(value = "/send-message", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.TEXT_PLAIN_VALUE)
-//    public ResponseEntity<String> sendMessageToService(@RequestBody Map<String, Object> requestBody) throws IOException {
-//        Long serviceId = ((Number) requestBody.get("serviceId")).longValue();
-//        String message = (String) requestBody.get("message");
-//
+//    @PostMapping("/{serviceId}/message-success")
+//    public String sendMessageSuccess(@RequestParam("serviceId") Long serviceId) throws IOException {
 //        ServiceEntity service = serviceService.getServiceById(serviceId);
-//        if (service == null) {
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Service not found");
+//        String message = EmojiParser.parseToUnicode(":white_check_mark: "+service.getName()+" service has successfully completed the task :white_check_mark: ");
+////        emailSenderService.sendEmail("park.ksenia23@gmail.com","hello","hello");
+//
+//        if (service != null) {
+//            String sendTo = service.getSendTo();
+//            if (sendTo != null) {
+//                switch (sendTo) {
+//                    case "Telegram":
+//                        // Call method to send message to chats
+//                        serviceService.sendMessageToServiceChats(serviceId, message,telegramBot);
+//                        break;
+//                    case "Email":
+//                        // Call method to send message to emails
+//                        serviceService.sendMessageToServiceEmails(serviceId, message);
+//                        break;
+//                    case "All":
+//                        // Call method to send message to both chats and emails
+//                        serviceService.sendMessageToServiceChats(serviceId, message,telegramBot);
+//                        serviceService.sendMessageToServiceEmails(serviceId, message);
+//                        break;
+//                    default:
+//                        // Handle if sendTo is neither Telegram nor Email nor All
+//                        break;
+//                }
+//            }
 //        }
 //
-//        String sendTo = service.getSendTo();
-//        if (sendTo != null) {
-//            switch (sendTo) {
-//                case "Telegram":
-//                    // Call method to send message to chats
-//                    serviceService.sendMessageToServiceChats(serviceId, message, telegramBot);
-//                    return ResponseEntity.ok("Message sent to Telegram chats");
-//                case "Email":
-//                    // Call method to send message to emails
-//                    serviceService.sendMessageToServiceEmails(serviceId, message);
-//                    return ResponseEntity.ok("Message sent to Email addresses");
-//                case "All":
-//                    // Call method to send message to both chats and emails
-//                    serviceService.sendMessageToServiceChats(serviceId, message, telegramBot);
-//                    serviceService.sendMessageToServiceEmails(serviceId, message);
-//                    return ResponseEntity.ok("Message sent to Telegram chats and Email addresses");
-//                default:
-//                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid 'sendTo' value");
+//        // Redirect back to service details page
+//        return "redirect:/services/" + serviceId;
+//    }
+
+//    @PostMapping("/{serviceId}/message-error")
+//    public String sendMessageError(@RequestParam("serviceId") Long serviceId) throws IOException {
+//        ServiceEntity service = serviceService.getServiceById(serviceId);
+//        String message = EmojiParser.parseToUnicode(":warning: ERROR occurred in "+ service.getName()+" service :warning:");
+//        if (service != null) {
+//            String sendTo = service.getSendTo();
+//            if (sendTo != null) {
+//                switch (sendTo) {
+//                    case "Telegram":
+//                        // Call method to send message to chats
+//                        serviceService.sendMessageToServiceChats(serviceId, message,telegramBot);
+//                        break;
+//                    case "Email":
+//                        // Call method to send message to emails
+//                        serviceService.sendMessageToServiceEmails(serviceId, message);
+//                        break;
+//                    case "All":
+//                        // Call method to send message to both chats and emails
+//                        serviceService.sendMessageToServiceChats(serviceId, message,telegramBot);
+//                        serviceService.sendMessageToServiceEmails(serviceId, message);
+//                        break;
+//                    default:
+//                        // Handle if sendTo is neither Telegram nor Email nor All
+//                        break;
+//                }
 //            }
-//        } else {
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No 'sendTo' value specified for the service");
 //        }
+//
+//        // Redirect back to service details page
+//        return "redirect:/services/" + serviceId;
 //    }
 
 //@PostMapping(value = "/send-message", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.TEXT_PLAIN_VALUE)
+//@PreAuthorize("hasRole('ADMIN')")
 //public ResponseEntity<String> sendMessageToService(@RequestBody Map<String, Object> requestBody) throws IOException {
+//    // Log the received JSON payload
+//    ObjectMapper mapper = new ObjectMapper();
+//    String requestBodyJson = mapper.writeValueAsString(requestBody);
+//    System.out.println("MESSAGE: " + requestBodyJson);
+//
+//    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//    boolean isAdmin = authentication.getAuthorities().stream()
+//            .anyMatch(r -> r.getAuthority().equals("ADMIN"));
+//    if (!isAdmin) {
+//        return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access denied");
+//    }
+//
+//    // Proceed with your existing logic
 //    Long serviceId = ((Number) requestBody.get("serviceId")).longValue();
+//    String header = (String) requestBody.get("header");
 //    String message = (String) requestBody.get("message");
 //    String sendTo = (String) requestBody.get("sendTo");
 //
-//    ServiceEntity service = serviceService.getServiceById(serviceId);
-//    if (service == null) {
+//    ServiceEntity service;
+//    try {
+//        service = serviceService.getServiceById(serviceId);
+//    } catch (NoSuchElementException e) {
 //        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Service not found");
 //    }
 //
 //    switch (sendTo) {
 //        case "Telegram":
 //            // Call method to send message to chats
-//            serviceService.sendMessageToServiceChats(serviceId, message, telegramBot);
+//            serviceService.sendMessageToServiceChats(serviceId, header, message, telegramBot);
 //            return ResponseEntity.ok("Message sent to Telegram chats");
 //        case "Email":
 //            // Call method to send message to emails
@@ -421,51 +392,5 @@ public String addChatsToService(@PathVariable Long id, @RequestParam(value = "se
 //            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid 'sendTo' value");
 //    }
 //}
-@PostMapping(value = "/send-message", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.TEXT_PLAIN_VALUE)
-@PreAuthorize("hasRole('ADMIN')")
-public ResponseEntity<String> sendMessageToService(@RequestBody Map<String, Object> requestBody) throws IOException {
-    // Log the received JSON payload
-    ObjectMapper mapper = new ObjectMapper();
-    String requestBodyJson = mapper.writeValueAsString(requestBody);
-    System.out.println("MESSAGE: " + requestBodyJson);
-
-    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    boolean isAdmin = authentication.getAuthorities().stream()
-            .anyMatch(r -> r.getAuthority().equals("ADMIN"));
-    if (!isAdmin) {
-        return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access denied");
-    }
-
-    // Proceed with your existing logic
-    Long serviceId = ((Number) requestBody.get("serviceId")).longValue();
-    String header = (String) requestBody.get("header");
-    String message = (String) requestBody.get("message");
-    String sendTo = (String) requestBody.get("sendTo");
-
-    ServiceEntity service;
-    try {
-        service = serviceService.getServiceById(serviceId);
-    } catch (NoSuchElementException e) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Service not found");
-    }
-
-    switch (sendTo) {
-        case "Telegram":
-            // Call method to send message to chats
-            serviceService.sendMessageToServiceChats(serviceId, header, message, telegramBot);
-            return ResponseEntity.ok("Message sent to Telegram chats");
-        case "Email":
-            // Call method to send message to emails
-            serviceService.sendMessageToServiceEmails(serviceId, message);
-            return ResponseEntity.ok("Message sent to Email addresses");
-        case "All":
-            // Call method to send message to both chats and emails
-            serviceService.sendMessageToServiceChats(serviceId, message, telegramBot);
-            serviceService.sendMessageToServiceEmails(serviceId, message);
-            return ResponseEntity.ok("Message sent to Telegram chats and Email addresses");
-        default:
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid 'sendTo' value");
-    }
-}
 
 }

@@ -43,7 +43,13 @@
                 <li class="nav-wrapper__item">
                     <a class="nav-wrapper__item-link" href="/user/list">Users</a>
                 </li>
+                <li class="nav-wrapper__item">
+                    <a class="nav-wrapper__item-link" href="/services/all">Services</a>
+                </li>
 
+                <li class="nav-wrapper__item">
+                    <a class="nav-wrapper__item-link" href="/chats/all">Telegram chats</a>
+                </li>
                 <li class="nav-wrapper__item">
                     <a class="nav-wrapper__item-link" href="/emails/all">Emails</a>
                 </li>
