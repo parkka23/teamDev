@@ -5,10 +5,15 @@ import com.example.notifymeapp.entity.Chat;
 import com.example.notifymeapp.entity.Email;
 import com.example.notifymeapp.entity.ServiceEntity;
 import com.example.notifymeapp.repository.ServiceRepository;
+<<<<<<< HEAD
 import com.example.notifymeapp.service.ChatService;
 import com.example.notifymeapp.service.EmailService;
 import com.example.notifymeapp.service.ServiceService;
 import com.example.notifymeapp.service.TelegramBot;
+=======
+import com.example.notifymeapp.service.EmailService;
+import com.example.notifymeapp.service.ServiceService;
+>>>>>>> 4899e04ec9c2146951237b27030190e4267c544d
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vdurmont.emoji.EmojiParser;
 import lombok.RequiredArgsConstructor;

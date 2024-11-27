@@ -26,7 +26,11 @@ import java.util.stream.Collectors;
 @Slf4j
 public class EmailController {
      private final EmailService emailService;
+<<<<<<< HEAD
      private final ServiceService serviceService;
+=======
+//     private final ServiceService serviceService;
+>>>>>>> 4899e04ec9c2146951237b27030190e4267c544d
      private final EmailRepository emailRepository;
 
     @GetMapping("/all")
