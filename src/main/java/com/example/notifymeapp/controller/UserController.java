@@ -76,9 +76,7 @@ public class UserController {
             session.removeAttribute("previousQuery");
         }
         String previousQuery = (String) session.getAttribute("previousQuery");
-
         List<User> users;
-
         if (query != null && !query.isEmpty()) {
             users = userRepository.findByFullNameContainingIgnoreCase(query);
             // Update the session with the current query
@@ -89,20 +87,15 @@ public class UserController {
         } else {
             users = userService.getUsers(); // Fetch all services if no query
         }
-
         users = userService.getUsers(users, sortField, sortDir); // Apply sorting and filtering
-
         model.addAttribute("users", users);
-
         List<String> userRoles = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
         model.addAttribute("userRoles", userRoles);
-
         model.addAttribute("sortField", sortField != null ? sortField : "");
         model.addAttribute("sortDir", sortDir != null ? sortDir : "asc");
         model.addAttribute("query", query != null ? query : ""); // Pass the query back to the view
-
         return "user/allUsers";
     }
 
@@ -124,7 +117,6 @@ public class UserController {
             model.addAttribute("roles", roleService.getAllRoles());
             return "user/register";
         }
-
         try {
             userService.saveUser(userDto);
         } catch (Exception e) {
@@ -133,7 +125,6 @@ public class UserController {
             model.addAttribute("roles", roles);
             return "user/register";
         }
-
         return "redirect:/user/list";
     }
     @GetMapping("/roles")
@@ -151,20 +142,16 @@ public class UserController {
         if (authentication != null && authentication.isAuthenticated()) {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
             User loggedUser=userRepository.getUserByUsername(userDetails.getUsername());
-
             if (Objects.equals(loggedUser.getId(), id)) {
                 return "redirect:/user/details";
             }
-
             Optional<User> optionalUser = userService.getUserById2(id);
-
             if (optionalUser.isPresent()) {
                 User user = optionalUser.get();
 
                 Set<String> userRoles = loggedUser.getRoles().stream()
                         .map(Role::getName)
                         .collect(Collectors.toSet());
-
                 model.addAttribute("user", user);
                 model.addAttribute("userRoles", userRoles);
             }
@@ -178,26 +165,18 @@ public class UserController {
     public String updateRolesForm2(@PathVariable Long id, Model model, Authentication authentication) {
         if (authentication != null && authentication.isAuthenticated() && authentication.getPrincipal() instanceof UserDetails) {
             Optional<User> optionalUser = userService.getUserById2(id);
-
             if (optionalUser.isPresent()) {
                 User user = optionalUser.get();
-
                 List<String> roleIdsList = new ArrayList<>(userService.convertToDto(user).getRoleIds());
-
                 model.addAttribute("user", userService.convertToDto(user));
                 model.addAttribute("roleIds", roleIdsList);
                 model.addAttribute("roles", roleService.getAllRoles());
-
             }
-
             return "user/updateRoles2";
         } else {
             return "redirect:/user/"+id;
         }
-
     }
-
-
 
     @PostMapping("/update/roles/{id}")
     public String updateRoles2(@PathVariable Long id, @ModelAttribute @Valid UserDto userDto, Authentication authentication, BindingResult bindingResult, Model model) {
