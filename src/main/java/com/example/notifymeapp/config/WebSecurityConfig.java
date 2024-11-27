@@ -64,6 +64,28 @@ public class WebSecurityConfig {
                                 .antMatchers("/user/update/roles").hasAnyAuthority("ADMIN")
 
 
+                                .antMatchers("/services/all").hasAnyAuthority("ADMIN", "USER")
+                                .antMatchers("/services/create").hasAnyAuthority("ADMIN")
+                                .antMatchers("/services/{id}").hasAnyAuthority("ADMIN", "USER")
+                                .antMatchers("/services/{id}/edit").hasAnyAuthority("ADMIN")
+                                .antMatchers("/services/{id}/delete").hasAnyAuthority("ADMIN")
+                                .antMatchers("/services/{id}/add-chat").hasAnyAuthority("ADMIN")
+                                .antMatchers("/services/{id}/add-email").hasAnyAuthority("ADMIN")
+                                .antMatchers("/services/{id}/delete-chat").hasAnyAuthority("ADMIN")
+                                .antMatchers("/services/{id}/delete-email").hasAnyAuthority("ADMIN")
+                                .antMatchers("/services/{serviceId}/message-success").hasAnyAuthority("ADMIN")
+                                .antMatchers("/services/{serviceId}/message-error").hasAnyAuthority("ADMIN")
+                                .antMatchers("/services/send-message").hasAnyAuthority("ADMIN")
+
+                                .antMatchers("/chats/all").hasAnyAuthority("ADMIN", "USER")
+                                .antMatchers("/chats/{id}/delete").hasAnyAuthority("ADMIN")
+
+                                .antMatchers("/emails/all").hasAnyAuthority("ADMIN", "USER")
+                                .antMatchers("/emails/create").hasAnyAuthority("ADMIN")
+                                .antMatchers("/emails/{id}/edit").hasAnyAuthority("ADMIN")
+                                .antMatchers("/emails/{id}/delete").hasAnyAuthority("ADMIN")
+
+                                .antMatchers("/message/send").hasAnyAuthority("ADMIN")
 
                         .anyRequest().permitAll()
 
