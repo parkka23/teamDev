@@ -7,6 +7,7 @@ import java.util.Map;
 
 @Service
 public class KeyboardLayoutConverter {
+
     private static final Map<Character, Character> EN_TO_RU_MAP = new HashMap<>();
     private static final Map<Character, Character> RU_TO_EN_MAP = new HashMap<>();
 

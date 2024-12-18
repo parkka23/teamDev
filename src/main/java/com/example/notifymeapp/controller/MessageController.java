@@ -9,10 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
@@ -59,28 +56,28 @@ public class MessageController {
         return showMessageForm(model);
     }
 
-//    @GetMapping("/translitRuToEn")
-//    @ResponseBody
-//    public String transliterateRuToEn(@RequestParam("text") String text) {
-//        return transliterationService.translitRuToEn(text);
-//    }
-//
-//    @GetMapping("/translitEnToRu")
-//    @ResponseBody
-//    public String transliterateEnToRu(@RequestParam("text") String text) {
-//        return transliterationService.translitEnToRu(text);
-//    }
-//
-//    @GetMapping("/convertEnToRu")
-//    @ResponseBody
-//    public String convertEnToRu(@RequestParam("text") String text) {
-//        return keyboardLayoutConverter.convertEnToRu(text);
-//    }
-//
-//    @GetMapping("/convertRuToEn")
-//    @ResponseBody
-//    public String convertRuToEn(@RequestParam("text") String text) {
-//        return keyboardLayoutConverter.convertRuToEn(text);
-//    }
+    @GetMapping("/translitRuToEn")
+    @ResponseBody
+    public String transliterateRuToEn(@RequestParam("text") String text) {
+        return transliterationService.translitRuToEn(text);
+    }
+
+    @GetMapping("/translitEnToRu")
+    @ResponseBody
+    public String transliterateEnToRu(@RequestParam("text") String text) {
+        return transliterationService.translitEnToRu(text);
+    }
+
+    @GetMapping("/convertEnToRu")
+    @ResponseBody
+    public String convertEnToRu(@RequestParam("text") String text) {
+        return keyboardLayoutConverter.convertEnToRu(text);
+    }
+
+    @GetMapping("/convertRuToEn")
+    @ResponseBody
+    public String convertRuToEn(@RequestParam("text") String text) {
+        return keyboardLayoutConverter.convertRuToEn(text);
+    }
 
 }

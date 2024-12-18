@@ -26,9 +26,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class EmailController {
      private final EmailService emailService;
-
      private final ServiceService serviceService;
-
      private final EmailRepository emailRepository;
 
     @GetMapping("/all")
@@ -81,59 +79,6 @@ public class EmailController {
         return "emails/allEmails";
     }
 
-//    @GetMapping("/all")
-//    public String getAllEmails(
-//            @RequestParam(required = false, defaultValue = "0") int page,
-//            @RequestParam(required = false, defaultValue = "10") int size,
-//            @RequestParam(required = false) String sortField,
-//            @RequestParam(required = false) String sortDir,
-//            @RequestParam(required = false) String query,
-//            @RequestParam(required = false) String clear,
-//            Model model,
-//            Authentication authentication,
-//            HttpServletRequest request) {
-//
-//        // Pagination logic
-//        Pageable pageable;
-//        if (sortField != null && sortDir != null) {
-//            Sort.Direction direction = sortDir.equalsIgnoreCase("asc") ? Sort.Direction.ASC : Sort.Direction.DESC;
-//            pageable = PageRequest.of(page, size, direction, sortField);
-//        } else {
-//            pageable = PageRequest.of(page, size);
-//        }
-//
-//        // Get the previous query from the session (if any)
-//        HttpSession session = request.getSession();
-//        if (!"/emails/all".equals(request.getHeader("Referer"))) {
-//            session.removeAttribute("previousQuery");
-//        }
-//        if ("true".equals(clear)) {
-//            session.removeAttribute("previousQuery");
-//        }
-//        String previousQuery = (String) session.getAttribute("previousQuery");
-//
-//        Page<Email> emailsPage;
-//        if (query != null && !query.isEmpty()) {
-//            emailsPage = emailService.getEmails(query, sortField, sortDir, page, size);
-//            // Update the session with the current query
-//            session.setAttribute("previousQuery", query);
-//        } else if (previousQuery != null && !previousQuery.isEmpty()) {
-//            emailsPage = emailService.getEmails(previousQuery, sortField, sortDir, page, size);
-//        } else {
-//            emailsPage = emailService.getAllEmails(page, size); // Fetch all emails with pagination
-//        }
-//
-//
-//        List<String> userRoles = authentication.getAuthorities().stream()
-//                .map(GrantedAuthority::getAuthority)
-//                .collect(Collectors.toList());
-//        model.addAttribute("userRoles", userRoles);
-//
-//        return "emails/allEmails";
-//    }
-
-
-
     @GetMapping("/{id}/delete")
     public String deleteEmail(@PathVariable String id, Model model, Authentication authentication,HttpServletRequest request) {
         List<ServiceEntity> services = serviceService.findServicesByEmail(id);
@@ -177,20 +122,6 @@ public class EmailController {
         }
         return "emails/updateEmail";
     }
-
-//    @PostMapping("/{id}/edit")
-//    public String updateEmail(@PathVariable String id, @ModelAttribute Email email, Model model) {
-//        email.setEmail(email.getEmail().trim());
-//        if (emailService.existsByEmail(email.getEmail())) {
-//            model.addAttribute("error", "Email already exists.");
-//            return "emails/updateEmail";
-//        } else {
-//            email.setEmail(id);
-//            emailService.updateEmail(email);
-//            return "redirect:/emails/all";
-//        }
-//
-//    }
 
     @PostMapping("/{id}/edit")
     public String updateEmail(@PathVariable String id, @ModelAttribute Email email, Model model) {
