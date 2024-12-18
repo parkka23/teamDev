@@ -43,6 +43,9 @@ public class MessageController {
             @RequestParam("message") String message,
             Model model) throws IOException {
 
+
+
+
         String subject = EmojiParser.parseToUnicode(":bell: Notification :bell:");
         if (chatIds != null && !chatIds.isEmpty()) {
             telegramBot.sendMessageToChats(subject + '\n' + message, chatIds);

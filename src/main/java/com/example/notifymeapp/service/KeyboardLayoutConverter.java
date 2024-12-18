@@ -29,7 +29,6 @@ public class KeyboardLayoutConverter {
             RU_TO_EN_MAP.put(ruUpper.charAt(i), enUpper.charAt(i));
         }
     }
-
     public String convertEnToRu(String text) {
         StringBuilder convertedText = new StringBuilder();
         for (char ch : text.toCharArray()) {
@@ -41,7 +40,6 @@ public class KeyboardLayoutConverter {
         }
         return convertedText.toString();
     }
-
     public String convertRuToEn(String text) {
         StringBuilder convertedText = new StringBuilder();
         for (char ch : text.toCharArray()) {
